@@ -5,7 +5,7 @@
 export const App = () => {
   return (
     <>
-      Hello world
+      Hello react-hw-02-phonebook
     </>
   )
 
