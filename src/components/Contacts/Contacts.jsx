@@ -7,14 +7,17 @@ const Contacts = ({contacts, onDeleteContact}) => {
     return (
         <div className={css.contacts}>
            {contacts.length === 0 ? (
-                <p>You haven`t any contacts in your Phonebook</p>
+                <p  className={css.desc}>Oops...You haven`t any contacts in your Phonebook</p>
             ) : (
-        <ul>
+        <ul className={css.list}>
         {contacts.map(contact => (
-            <li key={contact.id}>
+            <li key={contact.id} className={css.user}>
+                <img className={css.img} src="https://img.icons8.com/ios-filled/50/2cd8d5/user-male-circle.png" alt="user"/>
+                <div className={css.name}>
                 <p>{contact.name}</p>
                 <p>{contact.number}</p>
-                <button type='button' onClick={() => {
+                </div>
+                <button className={css.btn}type='button' onClick={() => {
                     onDeleteContact(contact.id)}}>Delete</button>
             </li>
         )).reverse()}

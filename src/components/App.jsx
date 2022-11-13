@@ -1,5 +1,6 @@
 import { Component } from "react";
 import PropTypes from 'prop-types';
+import css from './App.module.css'
 import ContactForm from "./ContactForm";
 import Contacts from "./Contacts";
 import Filter from "./Filter"
@@ -38,14 +39,13 @@ import {nanoid} from 'nanoid'
     this.setState({
       contacts: this.state.contacts.filter(contact => contact.id !== id)
     })
+    
   }
 
   changeFilter = (e) => {
     this.setState({
       filter: e.currentTarget.value
     })
-
-
   }
 
 
@@ -53,10 +53,10 @@ import {nanoid} from 'nanoid'
     const normalizedFilter = this.state.filter.toLowerCase();
     const visibleContacts = this.state.contacts.filter(contact => contact.name.toLowerCase().includes(normalizedFilter))
     return(
-      <>
-      <h1>Phonebook</h1>
+      <div className={css.phonebook}>
+      <h1 className={css.title}>Phonebook</h1>
       <ContactForm onSubmit={this.handleFormSubmit} />
-      <h2>Contacts</h2>
+      <h2 className={css.contacts__title}>Contacts</h2>
       <Filter 
       value={this.state.filter} 
       onChangeFilter ={this.changeFilter}
@@ -64,8 +64,9 @@ import {nanoid} from 'nanoid'
       <Contacts 
       contacts={visibleContacts}
       onDeleteContact={this.onChangeContacts}
+
       />
-      </>
+      </div>
     )
    
   }
