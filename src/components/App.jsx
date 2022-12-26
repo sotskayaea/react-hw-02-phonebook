@@ -16,6 +16,9 @@ import {nanoid} from 'nanoid'
 
   componentDidMount(){
     const contacts = JSON.parse(localStorage.getItem('contacts'))
+    if(!Array.isArray(contacts)){
+      return
+    }
    if(contacts.length !== 0){
     this.setState({
       contacts: contacts
