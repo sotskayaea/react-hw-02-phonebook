@@ -7,13 +7,20 @@ import Filter from "./Filter"
 import {nanoid} from 'nanoid'
 
 
-
-
  class App extends Component{
   state = {
     contacts: [],
     filter:''
     
+  }
+
+  componentDidMount(){
+    const contacts = JSON.parse(localStorage.getItem('contacts'))
+   if(contacts.length !== 0){
+    this.setState({
+      contacts: contacts
+    })
+   }
   }
 
   handleFormSubmit = (data) => {
@@ -30,15 +37,19 @@ import {nanoid} from 'nanoid'
       return
     }
     currentData.push({...data, id: nanoid()})
+    localStorage.setItem('contacts', JSON.stringify(currentData))
     this.setState({
       contacts: currentData
     })
   }
 
-  onChangeContacts = (id) =>{
+  onDeleteContacts = (id) =>{
     this.setState({
       contacts: this.state.contacts.filter(contact => contact.id !== id)
     })
+    const contacts = JSON.parse(localStorage.getItem('contacts'))
+    const filteredContacts = contacts.filter(contact => contact.id !== id)
+    localStorage.setItem('contacts', JSON.stringify(filteredContacts))
     
   }
 
@@ -47,7 +58,6 @@ import {nanoid} from 'nanoid'
       filter: e.currentTarget.value
     })
   }
-
 
   render(){
     const normalizedFilter = this.state.filter.toLowerCase();
@@ -63,7 +73,7 @@ import {nanoid} from 'nanoid'
       />
       <Contacts 
       contacts={visibleContacts}
-      onDeleteContact={this.onChangeContacts}
+      onDeleteContact={this.onDeleteContacts}
 
       />
       </div>
@@ -83,7 +93,7 @@ import {nanoid} from 'nanoid'
   }),
   handleFormSubmit: PropTypes.func,
   validationContacts: PropTypes.func,
-  onChangeContacts: PropTypes.func,
+  onDeleteContacts: PropTypes.func,
   changeFilter: PropTypes.func
  }
 
